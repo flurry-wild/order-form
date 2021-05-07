@@ -18,8 +18,14 @@
 Фронт: верстка bootstrap, все данные через ajax, оформление заказа без перезагрузки
 страницы.
 
-<p align="center"><img src="images/main.jpg" width="400"></p>
+Описание:
+В форму заказа вводятся данные. 
+<p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/main.png" width="400"></p>
+Выбирается тариф, отправляется аякс запрос на сервер для получения запрещённых дней для каждого тарифа для валидации даты на фронте.
+<p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/forbiddenDays.png" width="400"></p>
+Динамически изменяются запрещённые даты в календаре.
+<p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/calendar.png" width="400"></p>
+Затем в форму адреса вводится адрес в произвольном формате. Аяксом отрабатывает запрос к серверу, сервер получает запрос через плагин Dadata.
+Варианты адресов динамически отрисовываются. Затем можно выбрать конкретный адрес, нажав на него.
 
-<p align="center">
-</p>
-
+Создаём заказ.
