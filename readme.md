@@ -35,5 +35,6 @@
 <p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/calendar.png" width="400"></p>
 Затем в форму адреса вводится адрес в произвольном формате. Аяксом отрабатывает запрос к серверу, сервер получает запрос через плагин Dadata.
 Варианты адресов динамически отрисовываются. Затем можно выбрать конкретный адрес, нажав на него.
+<p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/dadata.png" width="400"></p>
 
 Создаём заказ.
