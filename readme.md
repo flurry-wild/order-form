@@ -18,7 +18,15 @@
 Фронт: верстка bootstrap, все данные через ajax, оформление заказа без перезагрузки
 страницы.
 
-Описание:
+<h1>Как запустить</h1>
+1. git clone https://github.com/maxim246/order-form2. 
+2. Настроить бд - переименовать файл config/database.sample.php в database.php, 
+прописать название бд, логин и пароль.
+Переименовать файл .env.example в .env, прописать настройки бд
+3. composer install в корне проекта
+4. php artisan migrate
+
+<h1>Описание</h1>
 В форму заказа вводятся данные. 
 <p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/main.png" width="400"></p>
 Выбирается тариф, отправляется аякс запрос на сервер для получения запрещённых дней для каждого тарифа для валидации даты на фронте.
