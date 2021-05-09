@@ -3,9 +3,23 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Services\OrderService;
 
 class StoreOrderPost extends FormRequest
 {
+    protected $orderService;
+
+    /**
+     * OrderController constructor.
+     * @param OrderService $orderService
+     */
+    public function __construct(OrderService $orderService)
+    {
+        parent::__construct();
+
+        $this->orderService = $orderService;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,7 +42,13 @@ class StoreOrderPost extends FormRequest
             'name' => 'required|max:60|string',
             'rate_id' => 'required|integer|exists:rates,id',
             'date' => 'required|date_format:d.m.Y',
-            'address' => 'required'
+            'address' => ['required', function ($attribute, $value, $fail) {
+                $result = $this->orderService->getDadataAddressVariants($value);
+
+                if (!in_array($value, $result)) {
+                    $fail('Неверный адрес');
+                }
+            },]
         ];
     }
 

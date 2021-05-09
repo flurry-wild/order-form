@@ -7,13 +7,28 @@ use App\Order;
 use App\Rate;
 use App\User;
 use Illuminate\Http\Request;
-use Fomvasss\Dadata\Facades\DadataSuggest;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Services\OrderService;
 
+/**
+ * Class OrderController
+ * @package App\Http\Controllers
+ */
 class OrderController extends Controller
 {
     const DAYS_NUMBERS = [0, 1, 2, 3, 4, 5, 6];
+
+    protected $orderService;
+
+    /**
+     * OrderController constructor.
+     * @param OrderService $orderService
+     */
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -27,6 +42,7 @@ class OrderController extends Controller
 
     /**
      * @param StoreOrderPost $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreOrderPost $request)
     {
@@ -47,10 +63,12 @@ class OrderController extends Controller
             $order->user_id = $user->id;
             $order->save();
         });
+
+        return response()->json(["result" => "success"]);
     }
 
     /**
-     * @param integer $rateId
+     * @param int $rateId
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function forbiddenRateDays($rateId)
@@ -61,7 +79,7 @@ class OrderController extends Controller
 
         $forbiddenDays = array_diff(self::DAYS_NUMBERS, json_decode($rate->days));
 
-        return response(json_encode(["forbiddenDays" => $forbiddenDays]));
+        return response()->json(["forbiddenDays" => $forbiddenDays]);
     }
 
     /**
@@ -72,18 +90,9 @@ class OrderController extends Controller
     {
         try {
             $query = $request->input('query');
-            $response = DadataSuggest::suggest("address", ["query" => $query, "count" => 4]);
+            $result = $this->orderService->getDadataAddressVariants($query);
 
-            $result = [];
-            if (isset($response['unrestricted_value'])) {
-                $result[0] = $response['unrestricted_value'];
-            } else {
-                foreach ($response as $key => $item) {
-                    $result[$key] = $item["unrestricted_value"];
-                }
-            }
-
-            return response(json_encode($result, JSON_UNESCAPED_UNICODE));
+            return response()->json($result, JSON_UNESCAPED_UNICODE);
         } catch (Exception $e) {
             abort(500);
         }
