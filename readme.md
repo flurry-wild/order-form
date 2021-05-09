@@ -38,3 +38,7 @@
 <p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/dadata.png" width="400"></p>
 
 Создаём заказ.
+
+Ошибки валидации приходят аяксом.<br>
+<p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/errors.png" width="400"></p>
+
