@@ -19,12 +19,12 @@
 страницы.
 
 <h1>Как запустить</h1>
-1. git clone https://github.com/maxim246/order-form2. 
+1. git clone https://github.com/maxim246/order-form.<br>
 2. Настроить бд - переименовать файл config/database.sample.php в database.php, 
-прописать название бд, логин и пароль.
-Переименовать файл .env.example в .env, прописать настройки бд
-3. composer install в корне проекта
-4. php artisan migrate
+прописать название бд, логин и пароль.<br>
+Переименовать файл .env.example в .env, прописать настройки бд<br>
+3. composer install в корне проекта<br>
+4. php artisan migrate<br>
 
 <h1>Описание</h1>
 В форму заказа вводятся данные. 

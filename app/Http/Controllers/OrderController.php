@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderPost;
 use App\Order;
 use App\Rate;
+use App\User;
 use Illuminate\Http\Request;
 use Fomvasss\Dadata\Facades\DadataSuggest;
 use Exception;
@@ -22,10 +23,18 @@ class OrderController extends Controller
 
     public function store(StoreOrderPost $request)
     {
-        dd($request);
-        $order = Order::create($request->all());
+        Order::create($request->all());
 
-        dd($order);
+        $phone = $request->input('phone');
+
+        $existUser = User::where('phone', $phone)->first();
+        if (empty($existUser)) {
+            $user = new User();
+            $user->name = $request->input('name');
+            $user->phone = $phone;
+
+            $user->save();
+        }
     }
 
     public function forbiddenRateDays($rateId)

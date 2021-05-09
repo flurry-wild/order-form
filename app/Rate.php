@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Rate extends Model
+class Rate extends BaseModel
 {
     protected $fillable = [
         'name', 'price', 'days'

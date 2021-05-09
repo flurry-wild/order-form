@@ -2,6 +2,7 @@
 
 @section('header')
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
+<link rel="stylesheet" href="css/create.css">
 @endsection
 
 @section('content')
@@ -53,38 +54,10 @@
         <input type="button" class="form-control btn btn-primary" value="Создать заказ" id="create-order">
     </form>
 
-    {{--@if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif--}}
+    <div class="alert alert-danger">
+        <ul class="list-group"></ul>
+    </div>
 </div>
-
-<style>
-    body {
-        font-size: 16px;
-    }
-    .order-form{
-        text-align:left;
-    }
-    .order-form #phone {
-        width: 25%;
-    }
-    .order-form #rate, .order-form #datepicker{
-        width: 50%;
-    }
-
-    .address-variants {
-        display:none;
-    }
-    .address-link{
-        cursor:pointer;
-    }
-</style>
 
 <script>
     $('.order-form>#rate').on('click', function() {
@@ -97,8 +70,8 @@
             success: function (data) {
                 let parseData = JSON.parse(data);
                 let forbiddenDays = [];
-                for (let prop in parseData.forbiddenDays) {
-                    forbiddenDays.push(prop);
+                for (let item in parseData.forbiddenDays) {
+                    forbiddenDays.push(item);
                 }
 
                 $('#datepicker').data("DateTimePicker").daysOfWeekDisabled(forbiddenDays);
@@ -114,15 +87,16 @@
             success: function (data) {
 
             },
-            error: function (data) {
-                let parseData = JSON.parse(data);
-                console.log(parseData.errors);
-            }
-                /*let data = response.responseJSON.errors;
-                $.each( data, function( key, value ) {
-                    $( "<span class='text-danger'>"+value+"</span>" ).insertAfter( "#"+key );
-                });*/
+            statusCode: {
+                422: function (data) {
+                    let errors = [];
+                    $.each (data.responseJSON.errors, function (i, item) {
+                        $('.alert-danger ul').append("<li class='list-group-item'>" + item[0] + "</li>");
+                    });
 
+                    $('.alert-danger').css('display', 'block');
+                }
+            }
         });
     });
 
