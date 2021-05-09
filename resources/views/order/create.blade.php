@@ -68,11 +68,10 @@
             url: '/forbidden-rate-days/'+rateId,
             data: {_token: "{{ csrf_token() }}" },
             success: function (data) {
-                let parseData = JSON.parse(data);
                 let forbiddenDays = [];
-                for (let item in parseData.forbiddenDays) {
+                $.each (data.forbiddenDays, function (i, item) {
                     forbiddenDays.push(item);
-                }
+                });
 
                 $('#datepicker').data("DateTimePicker").daysOfWeekDisabled(forbiddenDays);
             }
@@ -80,16 +79,15 @@
     });
 
     $('.order-form>#create-order').on('click', function() {
+        $('.alert-danger ul').empty();
+        $('.alert-danger').css('display', 'none');
+
         $.ajax({
             method: 'post',
             url: '/store',
             data: $('.order-form').serialize(),
-            success: function (data) {
-
-            },
             statusCode: {
                 422: function (data) {
-                    let errors = [];
                     $.each (data.responseJSON.errors, function (i, item) {
                         $('.alert-danger ul').append("<li class='list-group-item'>" + item[0] + "</li>");
                     });
@@ -109,12 +107,9 @@
                 url: '/address-hints',
                 data: {_token: "{{ csrf_token() }}", query: $('.order-form>.address>#address-input').val() },
                 success: function (data) {
-                    let parseData = JSON.parse(data);
-                    console.log(parseData);
                     $('.order-form>.address>.address-variants>#address-list').empty();
 
-                    $.each(parseData, function (i, item) {
-                        console.log(parseData[i]);
+                    $.each(data, function (i, item) {
                         $('.order-form>.address>.address-variants>#address-list').append("<li class='list-group-item'><a class='address-link'>" + item + "</a></li>");
                         $('.order-form>.address>.address-variants').css('display', 'block');
                     });
@@ -136,7 +131,7 @@
         $('#datepicker').datetimepicker({
             locale: 'ru',
             format: 'DD.MM.YYYY',
-            daysOfWeekDisabled:[0,1],
+            daysOfWeekDisabled:[2,3,4,5,6],
         });
     });
 </script>

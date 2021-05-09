@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Rate;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Services\OrderService;
 
 class StoreOrderPost extends FormRequest
 {
     protected $orderService;
+
+    protected $rate_id = null;
 
     /**
      * OrderController constructor.
@@ -18,6 +21,12 @@ class StoreOrderPost extends FormRequest
         parent::__construct();
 
         $this->orderService = $orderService;
+    }
+
+    protected function prepareForValidation()
+    {
+        $input = $this->all();
+        if (isset($input['rate_id'])) $this->rate_id = $input['rate_id'];
     }
 
     /**
@@ -41,14 +50,19 @@ class StoreOrderPost extends FormRequest
             'phone' => 'required|max:12|regex:/^\+7[0-9]{10}$/',
             'name' => 'required|max:60|string',
             'rate_id' => 'required|integer|exists:rates,id',
-            'date' => 'required|date_format:d.m.Y',
+            'date' => ['required','date_format:d.m.Y', function ($attribute, $value, $fail) {
+                $rate = Rate::find($this->rate_id);
+
+                if ($rate instanceof Rate) $days = json_encode($rate->days);
+               // dd(date('w', strtotime($value)));
+            }],
             'address' => ['required', function ($attribute, $value, $fail) {
                 $result = $this->orderService->getDadataAddressVariants($value);
 
                 if (!in_array($value, $result)) {
                     $fail('Неверный адрес');
                 }
-            },]
+            }]
         ];
     }
 

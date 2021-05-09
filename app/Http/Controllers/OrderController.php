@@ -92,7 +92,7 @@ class OrderController extends Controller
             $query = $request->input('query');
             $result = $this->orderService->getDadataAddressVariants($query);
 
-            return response()->json($result, JSON_UNESCAPED_UNICODE);
+            return response()->json($result);
         } catch (Exception $e) {
             abort(500);
         }
