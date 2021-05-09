@@ -62,6 +62,7 @@ class StoreOrderPost extends FormRequest
             }],
             'address' => ['required', function ($attribute, $value, $fail) {
                 $result = $this->orderService->getDadataAddressVariants($value);
+                if (empty($result)) $fail('Неверный адрес');
 
                 if (!in_array($value, $result)) {
                     $fail('Неверный адрес');
