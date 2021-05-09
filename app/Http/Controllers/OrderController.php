@@ -23,18 +23,21 @@ class OrderController extends Controller
 
     public function store(StoreOrderPost $request)
     {
-        Order::create($request->all());
+        $order = Order::create($request->all());
 
         $phone = $request->input('phone');
 
-        $existUser = User::where('phone', $phone)->first();
-        if (empty($existUser)) {
+        $user = User::where('phone', $phone)->first();
+        if (empty($user)) {
             $user = new User();
             $user->name = $request->input('name');
             $user->phone = $phone;
 
             $user->save();
         }
+
+        $order->user_id = $user->id;
+        $order->save();
     }
 
     public function forbiddenRateDays($rateId)

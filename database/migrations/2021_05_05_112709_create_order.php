@@ -16,8 +16,8 @@ class CreateOrder extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('phone');
-            $table->integer('rate_id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('rate_id');
             $table->dateTime('date');
             $table->string('address');
             $table->timestamps();
@@ -31,6 +31,6 @@ class CreateOrder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
     }
 }
