@@ -53,8 +53,12 @@ class StoreOrderPost extends FormRequest
             'date' => ['required','date_format:d.m.Y', function ($attribute, $value, $fail) {
                 $rate = Rate::find($this->rate_id);
 
-                if ($rate instanceof Rate) $days = json_encode($rate->days);
-               // dd(date('w', strtotime($value)));
+                if ($rate instanceof Rate) {
+                    $allowedDays = json_decode($rate->days);
+                    $weekDay = date('w', strtotime($value));
+
+                    if (!in_array($weekDay, $allowedDays)) $fail('Запрещённый день для данного тарифа');
+                }
             }],
             'address' => ['required', function ($attribute, $value, $fail) {
                 $result = $this->orderService->getDadataAddressVariants($value);
