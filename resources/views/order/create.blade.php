@@ -138,7 +138,7 @@
     $(function () {
         $('#datepicker').datetimepicker({
             locale: 'ru',
-            format: 'DD.MM.YYYY',
+            format: 'YYYY-MM-DD',
             daysOfWeekDisabled:[2,3,4,5,6],
         });
     });

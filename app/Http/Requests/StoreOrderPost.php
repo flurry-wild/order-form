@@ -52,7 +52,7 @@ class StoreOrderPost extends FormRequest
             'phone' => 'required|max:12|regex:/^\+7[0-9]{10}$/',
             'name' => 'required|max:60|string',
             'rate_id' => 'required|integer|exists:rates,id',
-            'date' => ['required', 'date_format:d.m.Y', function ($attribute, $value, $fail) {
+            'date' => ['required', 'date_format:Y-m-d', function ($attribute, $value, $fail) {
                 $rate = Rate::find($this->rate_id);
 
                 if ($rate instanceof Rate) {
@@ -77,6 +77,9 @@ class StoreOrderPost extends FormRequest
         ];
     }
 
+    /**
+     * @return array
+     */
     public function messages()
     {
         return [
