@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
@@ -36,4 +38,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function save(array $options = [])
+    {
+        try {
+            return parent::save($options);
+        } catch (Exception $e) {
+            Log::channel('errorlog')->error($e->getMessage());
+            return false;
+        }
+    }
 }

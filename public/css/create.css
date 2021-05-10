@@ -1,0 +1,25 @@
+body {
+    font-size: 16px;
+}
+.order-form{
+    text-align:left;
+}
+.order-form #phone {
+    width: 25%;
+}
+.order-form #rate, .order-form #datepicker{
+    width: 50%;
+}
+.address-variants {
+    display:none;
+}
+.address-link{
+    cursor:pointer;
+}
+.alert-danger {
+    margin-top: 20px;
+    display:none;
+}
+.notification{
+    display:none;
+}
