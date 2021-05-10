@@ -20,3 +20,6 @@ body {
     margin-top: 20px;
     display:none;
 }
+.notification{
+    display:none;
+}

@@ -57,6 +57,9 @@
     <div class="alert alert-danger">
         <ul class="list-group"></ul>
     </div>
+
+    <br>
+    <div class="text-success notification">Заказ оформлен</div>
 </div>
 
 <script>
@@ -86,6 +89,11 @@
             method: 'post',
             url: '/store',
             data: $('.order-form').serialize(),
+            success: function (data) {
+                if (data.result == 'success') {
+                    $('.notification').css('display','block');
+                }
+            },
             statusCode: {
                 422: function (data) {
                     $.each (data.responseJSON.errors, function (i, item) {
