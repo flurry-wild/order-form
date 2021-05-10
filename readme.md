@@ -31,11 +31,12 @@
 <p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/main.png" width="400"></p>
 Выбирается тариф, отправляется аякс запрос на сервер для получения запрещённых дней для каждого тарифа для валидации даты на фронте.
 <p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/forbiddenDays.png" width="400"></p>
-Динамически изменяются запрещённые даты в календаре.
+Динамически изменяются запрещённые даты в календаре для ввода в зависимости от тарифа.
 <p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/calendar.png" width="400"></p>
 Затем в форму адреса вводится адрес в произвольном формате. Аяксом отрабатывает запрос к серверу, сервер получает запрос через плагин Dadata.
 Варианты адресов динамически отрисовываются. Затем можно выбрать конкретный адрес, нажав на него.<br>
 Также адрес проверяется на бэкенде с помощью Dadata.<br>
+Не стал убирать ключи к Dadata, чтобы не ломать работоспособость тестового.
 <p align="center"><img src="https://github.com/maxim246/order-form/blob/vendor/public/images/dadata.png" width="400"></p>
 
 Создаём заказ.
