@@ -5,9 +5,8 @@ namespace App\Services;
 use Fomvasss\Dadata\Facades\DadataSuggest;
 use Exception;
 
-class OrderService {
-    const WEEK_DAYS_CONFORMITY = [0, 1, 2, 3, 4, 5, 6];
-
+class OrderService
+{
     /**
      * @param string $query
      * @return mixed

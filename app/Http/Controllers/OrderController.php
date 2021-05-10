@@ -50,7 +50,7 @@ class OrderController extends Controller
 
         $phone = $request->input('phone');
 
-        DB::transaction(function() use ($phone, $order, $request) {
+        DB::transaction(function () use ($phone, $order, $request) {
             $user = User::where('phone', $phone)->first();
             if (empty($user)) {
                 $user = new User();
@@ -75,7 +75,9 @@ class OrderController extends Controller
     {
         $rate = Rate::find($rateId);
 
-        if (!$rate instanceof Rate) abort(404);
+        if (!$rate instanceof Rate) {
+            abort(404);
+        }
 
         $forbiddenDays = array_diff(self::DAYS_NUMBERS, json_decode($rate->days));
 

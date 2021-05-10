@@ -26,7 +26,9 @@ class StoreOrderPost extends FormRequest
     protected function prepareForValidation()
     {
         $input = $this->all();
-        if (isset($input['rate_id'])) $this->rate_id = $input['rate_id'];
+        if (isset($input['rate_id'])) {
+            $this->rate_id = $input['rate_id'];
+        }
     }
 
     /**
@@ -50,19 +52,23 @@ class StoreOrderPost extends FormRequest
             'phone' => 'required|max:12|regex:/^\+7[0-9]{10}$/',
             'name' => 'required|max:60|string',
             'rate_id' => 'required|integer|exists:rates,id',
-            'date' => ['required','date_format:d.m.Y', function ($attribute, $value, $fail) {
+            'date' => ['required', 'date_format:d.m.Y', function ($attribute, $value, $fail) {
                 $rate = Rate::find($this->rate_id);
 
                 if ($rate instanceof Rate) {
                     $allowedDays = json_decode($rate->days);
                     $weekDay = date('w', strtotime($value));
 
-                    if (!in_array($weekDay, $allowedDays)) $fail('Запрещённый день для данного тарифа');
+                    if (!in_array($weekDay, $allowedDays)) {
+                        $fail('Запрещённый день для данного тарифа');
+                    }
                 }
             }],
             'address' => ['required', function ($attribute, $value, $fail) {
                 $result = $this->orderService->getDadataAddressVariants($value);
-                if (empty($result)) $fail('Неверный адрес');
+                if (empty($result)) {
+                    $fail('Неверный адрес');
+                }
 
                 if (!in_array($value, $result)) {
                     $fail('Неверный адрес');
