@@ -3,28 +3,22 @@
 namespace App\Http\Requests;
 
 use App\Rate;
+use App\Traits\Base;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Services\OrderService;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class StoreOrderPost extends FormRequest
 {
-    protected $orderService;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Base;
 
     protected $rate_id = null;
 
-    /**
-     * OrderController constructor.
-     * @param OrderService $orderService
-     */
-    public function __construct(OrderService $orderService)
-    {
-        parent::__construct();
-
-        $this->orderService = $orderService;
-    }
-
     protected function prepareForValidation()
     {
+        $this->initializeBaseDependencies();
+
         $input = $this->all();
         if (isset($input['rate_id'])) {
             $this->rate_id = $input['rate_id'];
@@ -65,7 +59,7 @@ class StoreOrderPost extends FormRequest
                 }
             }],
             'address' => ['required', function ($attribute, $value, $fail) {
-                $result = $this->orderService->getDadataAddressVariants($value);
+                $result = $this->dadataClient->getDadataAddressVariants($value);
                 if (empty($result)) {
                     $fail('Неверный адрес');
                 }
