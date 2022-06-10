@@ -3,6 +3,7 @@
 namespace App\Clients;
 
 use Exception;
+use Illuminate\Support\Facades\Config;
 
 class DadataClient
 {
@@ -14,10 +15,7 @@ class DadataClient
     public function getDadataAddressVariants(string $query)
     {
         try {
-            $dadata = new \Dadata\DadataClient(
-                '96f70fb0318823d889463bee64374e7cd405dff4',
-                'd4eea85a694dba5b16710af04b0ff531a3f94e44'
-            );
+            $dadata = new \Dadata\DadataClient(Config::get('dadata.token'), Config::get('dadata.secret'));
 
             $response = $dadata->suggest("address", $query, 4);
 

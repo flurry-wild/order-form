@@ -19,7 +19,7 @@
 страницы.
 
 <h1>Как запустить</h1>
-1. git clone https://github.com/maxim531/order-form.<br>
+1. git clone https://github.com/maksim531/order-form.<br>
 2. Настроить бд - переименовать файл config/database.sample.php в database.php, 
 прописать название бд, логин и пароль.<br>
 Переименовать файл .env.example в .env, прописать настройки бд<br>
