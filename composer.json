@@ -9,12 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "doctrine/dbal": "^3.3",
         "fideloper/proxy": "^4.0",
         "hflabs/dadata": "^22.3",
         "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0",
-        "movemoveapp/laravel-dadata": "^1.0"
+        "laravel/tinker": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
