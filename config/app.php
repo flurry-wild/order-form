@@ -175,7 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        MoveMoveIo\DaData\DaDataServiceProvider::class,
+        Fomvasss\Dadata\DadataServiceProvider::class,
     ],
 
     /*

@@ -2,34 +2,33 @@
 
 namespace App\Services;
 
-use App\Order;
-use App\User;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\DB;
+use Fomvasss\Dadata\Facades\DadataSuggest;
 use Exception;
 
 class OrderService
 {
-    public function createOrderWithUser(FormRequest $request)
+    /**
+     * @param string $query
+     * @return mixed
+     */
+    public function getDadataAddressVariants($query)
     {
         try {
-            DB::beginTransaction();
+            $response = DadataSuggest::suggest("address", ["query" => $query, "count" => 4]);
 
-            $order = Order::create($request->all());
+            $result = [];
+            if (isset($response['unrestricted_value'])) {
+                $result[0] = $response['unrestricted_value'];
+            } else {
+                foreach ($response as $key => $item) {
+                    $result[$key] = $item["unrestricted_value"];
+                }
+            }
 
-            $user = User::firstOrCreate(
-                ['phone' => $request->input('phone')],
-                ['name' => $request->input('name')]
-            );
+            return $result;
 
-            /** @var Order */
-            $order->setUserId($user->id);
-
-            DB::commit();
         } catch (Exception $e) {
-            DB::rollBack();
-
-            throw new Exception("Can not save order " . $e->getMessage());
+            return null;
         }
     }
 }
