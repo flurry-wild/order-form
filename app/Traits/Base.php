@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Clients\DadataClient;
 use App\Services\OrderService;
+use Illuminate\Support\Facades\Config;
 
 trait Base
 {
@@ -22,6 +23,7 @@ trait Base
      */
     public function initializeBaseDependencies() {
         $this->orderService = new OrderService();
-        $this->dadataClient = new DadataClient();
+
+        $this->dadataClient = new DadataClient(Config::get('dadata.token'), Config::get('dadata.secret'));
     }
 }
