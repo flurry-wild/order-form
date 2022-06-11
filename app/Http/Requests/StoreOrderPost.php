@@ -3,28 +3,20 @@
 namespace App\Http\Requests;
 
 use App\Rate;
+use App\Traits\Base;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Services\OrderService;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class StoreOrderPost extends FormRequest
-{
-    protected $orderService;
+class StoreOrderPost extends FormRequest {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Base;
 
     protected $rate_id = null;
 
-    /**
-     * OrderController constructor.
-     * @param OrderService $orderService
-     */
-    public function __construct(OrderService $orderService)
-    {
-        parent::__construct();
+    protected function prepareForValidation() {
+        $this->initializeBaseDependencies();
 
-        $this->orderService = $orderService;
-    }
-
-    protected function prepareForValidation()
-    {
         $input = $this->all();
         if (isset($input['rate_id'])) {
             $this->rate_id = $input['rate_id'];
@@ -36,8 +28,7 @@ class StoreOrderPost extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -46,8 +37,7 @@ class StoreOrderPost extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             'phone' => 'required|max:12|regex:/^\+7[0-9]{10}$/',
             'name' => 'required|max:60|string',
@@ -65,7 +55,7 @@ class StoreOrderPost extends FormRequest
                 }
             }],
             'address' => ['required', function ($attribute, $value, $fail) {
-                $result = $this->orderService->getDadataAddressVariants($value);
+                $result = $this->dadataClient->getDadataAddressVariants($value);
                 if (empty($result)) {
                     $fail('Неверный адрес');
                 }
@@ -80,8 +70,7 @@ class StoreOrderPost extends FormRequest
     /**
      * @return array
      */
-    public function messages()
-    {
+    public function messages() {
         return [
             'phone.required' => 'Не указан телефон',
             'phone.regex' => 'Неверный формат номера',
