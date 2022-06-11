@@ -5,8 +5,7 @@ namespace App\Clients;
 use Exception;
 use Dadata\DadataClient as VendorDadataClient;
 
-class DadataClient extends VendorDadataClient
-{
+class DadataClient extends VendorDadataClient {
     public function __construct($token, $secret) {
         parent::__construct($token, $secret);
     }
@@ -18,8 +17,7 @@ class DadataClient extends VendorDadataClient
      *
      * @throws \Exception
      */
-    public function getDadataAddressVariants(string $query)
-    {
+    public function getDadataAddressVariants(string $query) {
         try {
             $response = $this->suggest("address", $query, 4);
 

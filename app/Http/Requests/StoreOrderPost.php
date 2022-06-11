@@ -9,14 +9,12 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class StoreOrderPost extends FormRequest
-{
+class StoreOrderPost extends FormRequest {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Base;
 
     protected $rate_id = null;
 
-    protected function prepareForValidation()
-    {
+    protected function prepareForValidation() {
         $this->initializeBaseDependencies();
 
         $input = $this->all();
@@ -30,8 +28,7 @@ class StoreOrderPost extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -40,8 +37,7 @@ class StoreOrderPost extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             'phone' => 'required|max:12|regex:/^\+7[0-9]{10}$/',
             'name' => 'required|max:60|string',
@@ -74,8 +70,7 @@ class StoreOrderPost extends FormRequest
     /**
      * @return array
      */
-    public function messages()
-    {
+    public function messages() {
         return [
             'phone.required' => 'Не указан телефон',
             'phone.regex' => 'Неверный формат номера',

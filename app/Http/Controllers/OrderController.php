@@ -12,14 +12,12 @@ use Exception;
  * Class OrderController
  * @package App\Http\Controllers
  */
-class OrderController extends Controller
-{
+class OrderController extends Controller {
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
-    {
+    public function create() {
         $rates = Rate::get();
 
         return view('order.create', compact('rates'));
@@ -30,8 +28,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreOrderPost $request)
-    {
+    public function store(StoreOrderPost $request) {
         try {
             $form = new CreateOrderForm($request);
             $form->process();
@@ -47,8 +44,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function forbiddenRateDays(int $rateId)
-    {
+    public function forbiddenRateDays(int $rateId) {
         $rate = Rate::find($rateId);
 
         if (!$rate instanceof Rate) {
@@ -63,8 +59,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addressHints(Request $request)
-    {
+    public function addressHints(Request $request) {
         try {
             $query = $request->input('query');
 

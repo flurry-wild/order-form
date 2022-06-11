@@ -11,8 +11,10 @@ class DadataClientTest extends TestCase
     /** @var DadataClient */
     private $client;
 
-    protected function setUp(): void
-    {
+    /**
+     * @return void
+     */
+    protected function setUp() {
         $this->client = $this->getMockBuilder(DadataClient::class)
             ->setMethodsExcept(['getDadataAddressVariants'])
             ->setConstructorArgs([Config::get('dadata.token'), Config::get('dadata.secret')])
@@ -20,34 +22,44 @@ class DadataClientTest extends TestCase
     }
 
     /**
-     * A basic test example.
-     *
-     * @return void
+     * @return array[]
      */
-    public function testOneDadataAddressVariant()
-    {
-        $this->client->expects($this->once())
-            ->method('suggest')
-            ->with("address", 'Москва, Красная Пресня 5', 4)
-            ->willReturn(['unrestricted_value' => 'г Москва, ул Красная Пресня, д 13/5']);
-
-        $variants = $this->client->getDadataAddressVariants('Москва, Красная Пресня 5');
-        $this->assertIsArray($variants);
-        $this->assertEquals(count($variants), 1);
+    public function dataProvider() {
+        return [
+            [
+                ['unrestricted_value' => 'г Москва, ул Красная Пресня, д 13/5'],
+                1
+            ],
+            [
+                [
+                    ['unrestricted_value' => 'г Москва, ул Красная Пресня, д 13/5'],
+                    ['unrestricted_value' => 'г Москва, ул Красная Пресня, д 1 стр 5'],
+                ],
+                2
+            ]
+        ];
     }
 
-    public function testManyDadataAddressVariants()
-    {
+    /**
+     * Test check getting address variants
+     *
+     * @dataProvider dataProvider
+     *
+     * @param array $suggestValue
+     * @param int   $countOfVariants
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testOneDadataAddressVariant(array $suggestValue, int $countOfVariants) {
         $this->client->expects($this->once())
             ->method('suggest')
             ->with("address", 'Москва, Красная Пресня 5', 4)
-            ->willReturn([
-                ['unrestricted_value' => 'г Москва, ул Красная Пресня, д 13/5'],
-                ['unrestricted_value' => 'г Москва, ул Красная Пресня, д 1 стр 5']
-            ]);
+            ->willReturn($suggestValue);
 
         $variants = $this->client->getDadataAddressVariants('Москва, Красная Пресня 5');
         $this->assertIsArray($variants);
-        $this->assertEquals(count($variants), 2);
+        $this->assertEquals(count($variants), $countOfVariants);
     }
 }
