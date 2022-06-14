@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class BaseModel extends Model
-{
+class BaseModel extends Model {
+
     /**
      * @param array $options
      *

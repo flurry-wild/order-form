@@ -4,8 +4,7 @@ namespace App\Domain\ValueObject;
 
 use App\Domain\BaseModel;
 
-class Rate extends BaseModel
-{
+class Rate extends BaseModel {
     const DAYS_NUMBERS = [0, 1, 2, 3, 4, 5, 6];
 
     protected $fillable = [

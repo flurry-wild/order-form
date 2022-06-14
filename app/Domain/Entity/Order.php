@@ -4,8 +4,7 @@ namespace App\Domain\Entity;
 
 use App\Domain\BaseModel;
 
-class Order extends BaseModel
-{
+class Order extends BaseModel {
     protected $fillable = [
         'name', 'rate_id', 'date', 'address'
     ];
