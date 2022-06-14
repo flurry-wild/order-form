@@ -6,6 +6,11 @@ use Exception;
 use Dadata\DadataClient as VendorDadataClient;
 
 class DadataClient extends VendorDadataClient {
+
+    /**
+     * @param $token
+     * @param $secret
+     */
     public function __construct($token, $secret) {
         parent::__construct($token, $secret);
     }

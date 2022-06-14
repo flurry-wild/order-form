@@ -1,13 +1,21 @@
 <?php
 
-namespace App;
+namespace App\Domain\Entity;
 
-class Order extends BaseModel
-{
+use App\Domain\BaseModel;
+
+class Order extends BaseModel {
     protected $fillable = [
         'name', 'rate_id', 'date', 'address'
     ];
 
+    /**
+     * @param $userId
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
     public function setUserId($userId) {
         $this->user_id = $userId;
         $this->save();

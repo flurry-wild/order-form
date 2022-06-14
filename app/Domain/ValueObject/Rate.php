@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Domain\ValueObject;
 
-class Rate extends BaseModel
-{
+use App\Domain\BaseModel;
+
+class Rate extends BaseModel {
     const DAYS_NUMBERS = [0, 1, 2, 3, 4, 5, 6];
 
     protected $fillable = [

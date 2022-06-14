@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rate;
+use App\Domain\ValueObject\Rate;
 use App\Traits\Base;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\ValueObject\Rate;
 use App\Http\Requests\StoreOrderPost;
-use App\Rate;
 use App\UseCase\CreateOrderForm;
-use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\Request;
 
 /**
  * Class OrderController
