@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Domain\ValueObject;
+
+use App\Domain\BaseModel;
 
 class Rate extends BaseModel
 {

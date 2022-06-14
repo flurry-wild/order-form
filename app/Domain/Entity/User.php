@@ -1,11 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Domain\Entity;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Exception;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Exception;
 use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable

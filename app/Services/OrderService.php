@@ -2,14 +2,21 @@
 
 namespace App\Services;
 
-use App\Order;
-use App\User;
+use App\Domain\Entity\User;
+use App\Domain\Entity\Order;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
-use Exception;
 
 class OrderService
 {
+    /**
+     * @param \Illuminate\Foundation\Http\FormRequest $request
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
     public function createOrderWithUser(FormRequest $request)
     {
         try {
