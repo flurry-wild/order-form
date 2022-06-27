@@ -52,7 +52,7 @@ class DadataClientTest extends TestCase
      *
      * @throws \Exception
      */
-    public function testOneDadataAddressVariant(array $suggestValue, int $countOfVariants) {
+    public function testDadataAddressVariants(array $suggestValue, int $countOfVariants) {
         $this->client->expects($this->once())
             ->method('suggest')
             ->with("address", 'Москва, Красная Пресня 5', 4)
