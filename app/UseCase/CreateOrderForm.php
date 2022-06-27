@@ -2,24 +2,28 @@
 
 namespace App\UseCase;
 
-use App\Traits\Base;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\StoreOrderPost;
+use App\Services\OrderService;
 
 class CreateOrderForm {
-    use Base;
 
     /**
-     * @var \Illuminate\Foundation\Http\FormRequest '
+     * @var \Illuminate\Foundation\Http\FormRequest
      */
     private $request;
 
     /**
-     * @param \Illuminate\Foundation\Http\FormRequest $request
+     * @var \App\Services\OrderService
      */
-    public function __construct(FormRequest $request) {
-        $this->initializeBaseDependencies();
+    private $orderService;
 
+    /**
+     * @param \App\Http\Requests\StoreOrderPost $request
+     * @param \App\Services\OrderService        $orderService
+     */
+    public function __construct(StoreOrderPost $request, OrderService $orderService) {
         $this->request = $request;
+        $this->orderService = $orderService;
     }
 
     /**

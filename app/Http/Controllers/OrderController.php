@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Clients\DadataClient;
 use App\Domain\ValueObject\Rate;
 use App\Http\Requests\StoreOrderPost;
+use App\Services\OrderService;
 use App\UseCase\CreateOrderForm;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,13 +26,14 @@ class OrderController extends Controller {
     }
 
     /**
-     * @param StoreOrderPost $request
+     * @param \App\Http\Requests\StoreOrderPost $request
+     * @param \App\Services\OrderService        $orderService
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreOrderPost $request) {
+    public function store(StoreOrderPost $request, OrderService $orderService) {
         try {
-            $form = new CreateOrderForm($request);
+            $form = new CreateOrderForm($request, $orderService);
             $form->process();
         } catch (Exception $e) {
             abort(500, $e->getMessage());
@@ -55,15 +58,16 @@ class OrderController extends Controller {
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request  $request
+     * @param \App\Clients\DadataClient $dadataClient
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|void
      */
-    public function addressHints(Request $request) {
+    public function addressHints(Request $request, DadataClient $dadataClient) {
         try {
             $query = $request->input('query');
 
-            return response()->json($this->dadataClient->getDadataAddressVariants($query));
+            return response()->json($dadataClient->getDadataAddressVariants($query));
         } catch (Exception $e) {
             abort(500, $e->getMessage());
         }
