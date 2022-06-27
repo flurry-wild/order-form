@@ -3,20 +3,30 @@
 namespace App\Http\Requests;
 
 use App\Domain\ValueObject\Rate;
-use App\Traits\Base;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class StoreOrderPost extends FormRequest {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Base;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * @var \App\Clients\DadataClient
+     */
+    private $dadataClient;
+
+    /**
+     * @param \App\Clients\DadataClient $dadataCLient
+     */
+    public function setDadataClient($dadataCLient) {
+        $this->dadataClient = $dadataCLient;
+    }
+
+    /** @var int|null */
     protected $rate_id = null;
 
     protected function prepareForValidation() {
-        $this->initializeBaseDependencies();
-
         $input = $this->all();
         if (isset($input['rate_id'])) {
             $this->rate_id = $input['rate_id'];
